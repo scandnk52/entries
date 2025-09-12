@@ -1,0 +1,58 @@
+{% import "macros/icons.html" as icons %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>{% block title %} - {{ config.APP_NAME }}{% endblock %}</title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/style.css') }}">
+
+        <!-- CDN Scripts -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+        <!-- Tailwind CSS Configuration -->
+        <script>
+            tailwind.config = {
+                content: ["./**/*.{html,js}"],
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            ui: ['Open Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                            content: ['Merriweather', 'ui-serif', 'Georgia', 'serif']
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <!-- Scripts -->
+        <script defer src="{{ url_for('static', filename='assets/scripts/script.js') }}"></script>
+
+</head>
+<body class="bg-slate-900 text-neutral-100 font-ui">
+
+    {% include "partials/_header.html" %}
+
+    <div class="min-h-screen container md:mx-auto flex flex-col md:flex-row pt-16">
+
+        {% include "partials/_left_sidebar.html" %}
+
+         <main id="main" class="lg:block flex-1 p-4 pb-16 lg:pb-4 font-content w-full z-10">
+            {% include "partials/_alerts.html" %}
+            {% block content %}{% endblock %}
+        </main>
+
+        {% include "partials/_right_sidebar.html" %}
+
+        {% include "partials/_mobile_menus.html" %}
+
+    </div>
+</body>
+</html>

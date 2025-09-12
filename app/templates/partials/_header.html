@@ -1,0 +1,88 @@
+<header class="w-full fixed backdrop-blur border-b border-slate-700 z-50">
+
+    <div class="container h-16 mx-auto flex items-center justify-between">
+
+        <!-- Logo -->
+        <div class="flex items-center space-x-2">
+            <a class="no-underline" href="{{ url_for('main.home') }}">
+                <h1 class="text-3xl font-bold text-white hover:text-neutral-400">{{ config.APP_NAME }}</h1>
+            </a>
+            <span class="px-1 rounded-xl bg-slate-700">{{ config.APP_VERSION }}</span>
+        </div>
+
+        <!-- Search -->
+        <div class="flex flex-1 items-center justify-center mx-8">
+                <div class="flex w-full lg:w-80">
+                    <form class="w-full" method="get" action="{{ url_for('search.search') }}">
+                        <div class="flex bg-slate-800 border border-slate-700 rounded-md w-full">
+                            <input name="q" class="w-full py-1 px-1 m-0 bg-transparent rounded-md rounded-r-none" type="text" placeholder="Search for something..." value="{{ query }}">
+                            <button type="submit" class="w-8 flex items-center justify-center rounded-r-md hover:bg-slate-700">
+                                {{ icons.icon("search") }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center space-x-4">
+
+            <!-- User Authenticated -->
+            {% if current_user.is_authenticated %}
+
+            <!-- Notification -->
+            <div x-data="{ open: false }" class="relative">
+                <button @click="open = ! open" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-800">
+                    {{ icons.icon("notification") }}
+                </button>
+                <div x-show="open" @click.outside="open = false">
+                    <div class="absolute right-0 mt-2 p-2 w-72 z-60 bg-slate-800 shadow-lg rounded-md border border-slate-700">
+                    </div>
+                </div>
+            </div>
+
+            <!-- User -->
+            <div x-data="{ open: false }" class="relative">
+                <button @click="open = ! open" class="w-10 h-10 flex items-center justify-center rounded-full bg-white border-4 border-slate-700 ">
+                    <img class="rounded-full w-full h-full" alt="{{ current_user.username }}" src="{{ url_for('static', filename='uploads/avatar/' + current_user.avatar) }}">
+                </button>
+                <div x-show="open" @click.outside="open = false">
+                    <div class="absolute right-0 mt-2 p-2 w-72 z-60 bg-slate-800 shadow-lg rounded-md border border-slate-700">
+                        <ul class="my-1 py-1 border-y border-slate-700">
+                            <li>
+                                <a class="flex hover:bg-slate-700 px-2 py-2 rounded-md" href="{{ url_for('user.profile', username=current_user.username)}}">
+                                    {{ icons.icon("user") }}
+                                    <span class="ml-4 text-neutral-200">View Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="flex hover:bg-slate-700 px-2 py-2 rounded-md" href="{{ url_for('user.settings', username=current_user.username)}}">
+                                    {{ icons.icon("settings") }}
+                                    <span class="ml-4 text-neutral-200">Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="flex hover:bg-slate-700 px-2 py-2 rounded-md" href="{{ url_for('auth.logout')}}">
+                                    {{ icons.icon("logout") }}
+                                    <span class="ml-4 text-red-300">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No User -->
+            {% else %}
+            <div class="bg-slate-700 rounded-md hover:bg-slate-600">
+                <a class="block px-3 py-1" href="{{ url_for('auth.login') }}">Login</a>
+            </div>
+
+            <div class="bg-slate-700 rounded-md hover:bg-slate-600">
+                <a class="block px-3 py-1" href="{{ url_for('auth.register') }}">Register</a>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</header>

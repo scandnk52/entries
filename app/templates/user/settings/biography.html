@@ -1,0 +1,16 @@
+{% extends 'user/settings/_settings_base.html' %}
+
+{% from 'macros/forms.html' import render_field, render_button %}
+
+{% block settings_content %}
+
+<div class="mx-auto w-full max-w-xl">
+    <h1 class="text-3xl font-bold mb-8">Biography</h1>
+    <form method="post" action="{{ url_for('user.update_biography', username=user.username) }}">
+        {{ form.hidden_tag() }}
+        {{ render_field(form.biography, placeholder="Biography", class="h-96") }}
+        {{ render_button(form.submit) }}
+    </form>
+</div>
+
+{% endblock %}

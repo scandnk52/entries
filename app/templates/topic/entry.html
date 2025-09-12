@@ -1,0 +1,14 @@
+{% from 'macros/forms.html' import render_field, render_button %}
+
+{% block content %}
+
+<div class="font-ui mx-auto w-full max-w-3xl">
+    <h1 class="text-2xl font-bold mt-8 my-4">New Topic</h1>
+    <form method="post" action="{{ url_for('entry.new_entry', topic_slug=topic.slug) }}">
+        {{ form.hidden_tag() }}
+        {{ render_field(form.content, None, "Content", False, "h-60") }}
+        {{ render_button(form.submit) }}
+    </form>
+</div>
+
+{% endblock %}

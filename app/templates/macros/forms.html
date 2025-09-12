@@ -1,0 +1,40 @@
+{% import "macros/icons.html" as icons %}
+
+{% macro render_field(field, icon=None, placeholder="", label=False, class="", value="") %}
+    <div class="my-4">
+        {% if label %}
+        <label class="block mb-1" for="{{ field.label.id }}">
+            {{ field.label.text }}
+        </label>
+        {% endif %}
+        <div class="flex items-stretch justify-center mb-1">
+            {% if icon %}
+            <div class="w-10 bg-slate-600 flex items-center justify-center px-2 rounded-l-md">
+                {{ icons.icon(icon) }}
+            </div>
+            {% endif %}
+            {{ field(class="w-full py-2 px-3 m-0 bg-transparent border border-slate-700 " ~ ("rounded-r-md" if icon else "rounded-md") + " " + class, placeholder=placeholder, value=value) }}
+        </div>
+        {% if field.errors %}
+        <div>
+            {% for error in field.errors %}
+            <p class="font-light text-red-400">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_button(field, class="", value=None) %}
+  {{ field(class="w-full bg-slate-700 hover:bg-slate-600 py-2 rounded-md cursor-pointer" + class, value=value or field.label.text) }}
+{% endmacro %}
+
+{% macro render_upload_label(field) %}
+<label for="{{ field.id }}" class="flex flex-col items-center justify-center h-48 min-w-60 my-2 border-2 border-slate-700 border-dashed rounded cursor-pointer bg-slate-700 hover:bg-slate-800">
+    <div class="flex flex-col items-center justify-center py-5 px-2">
+        {{ icons.icon('upload', 8, 'mb-4 text-gray-500 dark:text-gray-400') }}
+        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Click to upload</p>
+    </div>
+    {{ field(class="hidden") }}
+</label>
+{% endmacro %}

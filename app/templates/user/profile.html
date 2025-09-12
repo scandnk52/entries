@@ -1,0 +1,75 @@
+{% extends "layouts/base.html" %}
+{% from "macros/entry.html" import render_entry %}
+{% from "macros/pagination.html" import render_pagination %}
+
+{% block title %} {{ user.username }} {{ super() }}{% endblock %}
+
+{% block content %}
+
+<div class="font-ui">
+
+    <div class="flex justify-between items-start mb-4">
+
+        <div class="flex space-x-6 mb-2">
+
+            <div>
+                <img src="{{ url_for('static', filename='uploads/avatar/' + user.avatar) }}" alt="{{ user.username }}" class="h-32 w-32 rounded-full bg-white border-4 border-slate-600">
+            </div>
+
+            <div>
+
+                <div class="flex items-center">
+                    <h1 class="text-3xl font-bold">{{ user.username }}</h1>
+                </div>
+
+                <div class="flex space-x-2 items-center mt-1">
+                    {{ icons.icon('date') }}
+                    <p class="text-sm font-light text-neutral-400">{{ user.created_at }}</p>
+                </div>
+
+                <div class="flex space-x-4 mt-1 text-base py-1">
+                    <span class="flex items-center space-x-1">
+                        {{ icons.icon('entries') }}
+                        <b>{{ user.entries.count() }}</b>
+                    </span>
+                    <span class="flex items-center space-x-1">
+                        {{ icons.icon('topics') }}
+                        <b>{{ user.topics.count() }}</b>
+                    </span>
+                </div>
+
+                <div class="hidden flex space-x-3 mt-2">
+                    <a class="px-4 py-1 bg-red-700 hover:bg-slate-600 rounded text-sm">
+                        {{ icons.icon('heart') }}
+                    </a>
+                    <a class="px-4 py-1 bg-blue-900 hover:bg-slate-600 rounded text-sm">
+                        {{ icons.icon('message') }}
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    {% if user.biography %}
+    <div class="text-sm border border-slate-600 rounded px-6 py-4 mb-6">
+        <p class="text-neutral-200 font-light font-content">{{ render_entry_content(user.biography)|safe }}</p>
+    </div>
+    {% endif %}
+
+    <div class="flex space-x-2">
+        <a href="{{ url_for('user.profile', username=user.username) }}" class="flex-1 bg-slate-700 border border-slate-600 px-4 py-1 rounded hover:bg-slate-500">Last Entries</a>
+        <a href="{{ url_for('user.get_topics', username=user.username) }}" class="flex-1 bg-slate-700 border border-slate-600 px-4 py-1 rounded hover:bg-slate-500">Created Topics</a>
+        {% if current_user == user %}
+        <a href="{{ url_for('user.update_biography', username=user.username) }}" class="flex-1 bg-slate-700 border border-slate-600 px-4 py-1 rounded hover:bg-slate-500">Settings</a>
+        {% endif %}
+    </div>
+
+    <div class="mt-6">
+        {% block user_content %}{% endblock %}
+    </div>
+
+</div>
+
+{% endblock %}

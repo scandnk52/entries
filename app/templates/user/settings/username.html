@@ -1,0 +1,17 @@
+{% extends 'user/settings/_settings_base.html' %}
+
+{% from 'macros/forms.html' import render_field, render_button %}
+
+{% block settings_content %}
+
+<div class="mx-auto w-full max-w-xl">
+    <h1 class="text-3xl font-bold mb-8">Username</h1>
+    <form method="post" action="{{ url_for('user.update_username', username=user.username) }}">
+        {{ form.hidden_tag() }}
+        {{ render_field(form.username, "user", "Username", value=user.username) }}
+        {{ render_field(form.current_password, "password", "Current Password") }}
+        {{ render_button(form.submit) }}
+    </form>
+</div>
+
+{% endblock %}

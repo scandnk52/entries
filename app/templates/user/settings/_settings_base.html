@@ -1,0 +1,19 @@
+{% extends 'user/profile.html' %}
+
+{% block title %} Settings - {{ super() }}{% endblock %}
+
+{% block user_content %}
+    <div class="font-ui mt-10 rounded p-3 border border-slate-700 bg-slate-800">
+        <h1 class="text-3xl mb-6 font-bold">Settings</h1>
+        <div class="flex space-x-1">
+            <a href="{{ url_for('user.update_biography', username=user.username) }}" class="flex-1 bg-slate-700 border border-slate-600 px-4 py-1 rounded hover:bg-slate-500">Biography</a>
+            <a href="{{ url_for('user.update_avatar', username=user.username) }}" class="flex-1 bg-slate-700 border border-slate-600 px-4 py-1 rounded hover:bg-slate-500">Avatar</a>
+            <a href="{{ url_for('user.update_email', username=user.username) }}" class="flex-1 bg-slate-700 border border-slate-600 px-4 py-1 rounded hover:bg-slate-500">E-Mail</a>
+            <a href="{{ url_for('user.update_username', username=user.username) }}" class="flex-1 bg-slate-700 border border-slate-600 px-4 py-1 rounded hover:bg-slate-500">Username</a>
+            <a href="{{ url_for('user.update_password', username=user.username) }}" class="flex-1 bg-slate-700 border border-slate-600 px-4 py-1 rounded hover:bg-slate-500">Password</a>
+        </div>
+        <div class="mt-6 py-10 px-4 rounded bg-slate-900">
+            {% block settings_content %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

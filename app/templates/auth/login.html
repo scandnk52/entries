@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Login {{ super() }}{% endblock %}
+{% from 'macros/forms.html' import render_field, render_button %}
+
+{% block content %}
+
+<div class="font-ui mx-auto w-full max-w-xl">
+    <h1 class="text-3xl font-bold mb-8">Login</h1>
+    <form method="post" action="{{ url_for('auth.login') }}">
+        {{ form.hidden_tag() }}
+        {{ render_field(form.username, "user", "Username or E-Mail") }}
+        {{ render_field(form.password, "password", "Password") }}
+        {{ render_button(form.submit) }}
+    </form>
+    <p class="text-center text-md my-4 font-light">Don't have an account? <a class="text-blue-400 hover:text-blue-300 hover:underline" href="{{ url_for('auth.register') }}">Register</a> here</p>
+</div>
+
+{% endblock %}

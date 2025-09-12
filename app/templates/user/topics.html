@@ -1,0 +1,37 @@
+{% extends 'user/profile.html' %}
+
+{% block title %} Created Topics - {{ super() }}{% endblock %}
+
+{% block user_content %}
+
+<div class="bg-slate-900 py-2">
+    {% if topics.items %}
+        {{ render_pagination(topics, 'user.get_topics', params={'username': user.username}) }}
+
+        {% for topic in topics.items %}
+
+        <div class="rounded-lg shadow-sm px-4 py-2 my-4 border border-slate-700">
+            <h3 class="mb-1">
+                <a href="{{ url_for('topic.get_topic', topic_slug=topic.slug) }}" class="text-lg font-bold text-white hover:underline">{{ topic.title }}</a>
+            </h3>
+        </div>
+
+        {% endfor %}
+
+        {{ render_pagination(topics, 'user.get_topics', params={'username': user.username}) }}
+    {% elif topics.pages == 0 and user == current_user %}
+        <div class="text-center">
+            <p class="text-center text-2xl font-bold">You dont have a any topic</p>
+            <a href="{{ url_for('topic.new_topic') }}" class="inline-block mt-2 text-xl text-blue-400 hover:text-blue-500 hover:underline">Create Topic</a>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <p class="text-center text-2xl font-bold">There's nothing here</p>
+            {% if topics.pages != 0 %}
+                <a href="{{ url_for('user.get_topics', username=user.username) }}" class="inline-block mt-2 text-xl text-blue-400 hover:text-blue-500 hover:underline">Go back</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

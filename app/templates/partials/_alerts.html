@@ -1,0 +1,19 @@
+ {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="text-lg mb-4">
+        <ul class="font-ui">
+        {% for category, message in messages %}
+            {% set bg_color = 'bg-yellow-900' %}
+            {% if category == 'success' %}
+                {% set bg_color = 'bg-green-900' %}
+            {% elif category == 'error' %}
+                {% set bg_color = 'bg-red-900' %}
+            {% endif %}
+            <li class="{{ bg_color }} rounded my-2 py-2 px-4 shadow-lg text-white">
+                {{ message }}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endwith %}

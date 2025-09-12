@@ -1,0 +1,26 @@
+{% extends 'user/profile.html' %}
+
+{% block title %} Last Entries - {{ super() }}{% endblock %}
+
+{% block user_content %}
+<div class="bg-slate-900 py-2">
+    {% if entries.items %}
+        {{ render_pagination(entries, 'user.profile', params={'username': user.username}) }}
+        {% for entry in entries.items %}
+            {{ render_entry(entry, true) }}
+        {% endfor %}
+        {{ render_pagination(entries, 'user.profile', params={'username': user.username}) }}
+    {% elif entries.pages == 0 and user == current_user %}
+        <div class="text-center">
+            <p class="text-center text-2xl font-bold">You dont have a any entry</p>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <p class="text-center text-2xl font-bold">There's nothing here</p>
+            {% if entries.pages != 0 %}
+                <a href="{{ url_for('user.profile', username=user.username) }}" class="inline-block mt-2 text-xl text-blue-400 hover:text-blue-500 hover:underline">Go back</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

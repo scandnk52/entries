@@ -1,0 +1,34 @@
+{% extends "layouts/base.html" %}
+{% from "macros/pagination.html" import render_pagination %}
+
+{% block title %} Results for: {{ query }} {{ super() }}{% endblock %}
+
+{% block content %}
+
+    <div class="mb-6 p-2">
+        <h1 class="text-3xl font-ui">Results for: <span class="font-bold italic">{{ query }}</span></h1>
+    </div>
+
+    {% if results.items %}
+
+        {{ render_pagination(results, 'search.search', {'q': query}) }}
+
+        {% for result in results.items %}
+
+        <div class="rounded-lg shadow-sm px-4 py-2 my-4 border border-slate-700">
+            <h3 class="mb-1">
+                <a href="{{ url_for('topic.get_topic', topic_slug=result.slug) }}" class="text-lg font-bold text-white hover:underline">{{ result.title }}</a>
+            </h3>
+        </div>
+
+        {% endfor %}
+
+        {{ render_pagination(results, 'search.search', params={'q': query}) }}
+    {% else %}
+        <div class="text-center">
+            <p class="text-center text-2xl font-bold">There's nothing here</p>
+            <a href="{{ url_for('main.home') }}" class="inline-block mt-2 text-xl text-blue-400 hover:text-blue-500 hover:underline">Home</a>
+        </div>
+    {% endif %}
+
+{% endblock %}

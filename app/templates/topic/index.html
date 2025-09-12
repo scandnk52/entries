@@ -1,0 +1,31 @@
+{% extends "layouts/base.html" %}
+{% from "macros/entry.html" import render_entry %}
+{% from "macros/pagination.html" import render_pagination %}
+
+{% block title %} {{ topic.title }} {{ super() }}{% endblock %}
+
+{% block content %}
+
+<h3 class="my-3">
+    <a href="{{ url_for('topic.get_topic', topic_slug=topic.slug) }}" class="text-2xl font-bold text-white hover:underline">{{ topic.title }}</a>
+</h3>
+
+<div>
+    {{ render_pagination(entries, 'topic.get_topic', params={'topic_slug': topic.slug}) }}
+    {% if entries.items %}
+        {% for entry in entries.items %}
+            {{ render_entry(entry) }}
+        {% endfor %}
+    {% else %}
+        <p class="text-center text-lg my-8 font-bold">There is nothing here! Go <a class="text-blue-400 hover:text-blue-300 hover:underline" href="{{ url_for('topic.get_topic', topic_slug=topic.slug) }}">back</a> to top</p>
+    {% endif %}
+    {{ render_pagination(entries, 'topic.get_topic', params={'topic_slug': topic.slug}) }}
+</div>
+
+{% if current_user.is_authenticated %}
+    {% include "topic/entry.html" %}
+{% else %}
+    <p class="text-center text-lg my-8 font-ui">You need to <a class="text-blue-400 hover:text-blue-300 hover:underline" href="{{ url_for('auth.login', next=url_for('topic.get_topic', topic_slug=topic.slug)) }}">login</a> to create a entry</p>
+{% endif %}
+
+{% endblock %}

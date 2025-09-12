@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}New Topic {{ super() }}{% endblock %}
+{% from 'macros/forms.html' import render_field, render_button %}
+
+{% block content %}
+
+<div class="font-ui mx-auto w-full max-w-3xl">
+    <h1 class="text-3xl font-bold mb-8">New Topic</h1>
+    <form method="post" action="{{ url_for('topic.new_topic') }}">
+        {{ form.hidden_tag() }}
+        {{ render_field(form.title, None, "Title") }}
+        {{ render_field(form.content, None, "Content", False, "h-96") }}
+        {{ render_button(form.submit) }}
+    </form>
+</div>
+
+{% endblock %}

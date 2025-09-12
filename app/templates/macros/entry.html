@@ -1,0 +1,30 @@
+{% macro render_entry(entry, title=None) %}
+    {% if entry %}
+    	<div class="rounded-lg shadow-sm px-4 py-2 my-4 border border-slate-700">
+
+        {% if title %}
+            <h3 class="mb-1">
+                <a href="{{ url_for('topic.get_topic', topic_slug=entry.topic.slug) }}" class="text-lg font-bold text-white hover:underline">{{ entry.topic.title }}</a>
+            </h3>
+        {% endif %}
+
+            <div class="mt-5 text-neutral-300 text-base leading-relaxed">
+                <p class="text-md">{{ render_entry_content(entry.content)|safe }}</p>
+            </div>
+
+            <div class="flex justify-end items-center mt-4 text-neutral-300 text-sm">
+                <div class="flex items-center space-x-2">
+                    <div class="text-right">
+                        <a href="{{ url_for('user.profile', username=entry.author.username) }}" class="font-medium text-neutral-100 hover:underline">
+                            {{ entry.author.username }}
+                        </a>
+                        <p class="text-xs text-neutral-400">{{ entry.created_at }}</p>
+                    </div>
+                    <a href="{{ url_for('user.profile', username=entry.author.username) }}">
+                        <img src="{{ url_for('static', filename='uploads/avatar/' + entry.author.avatar) }}" alt="{{ entry.author.username }}" class="w-10 h-10 rounded-full border-2 border-slate-700 bg-white">
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}

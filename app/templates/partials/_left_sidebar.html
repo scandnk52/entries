@@ -1,0 +1,57 @@
+<aside id="left-sidebar" class="hidden lg:block lg:sticky top-16 lg:w-80 w-full h-[calc(100vh-4rem)] z-10 lg:border-r border-slate-700 py-4 pb-16 overflow-auto">
+
+    <div class="flex-grow mr-4">
+
+        {% if current_user.is_authenticated %}
+        <nav class="space-y-1">
+            <a href="#" class="flex items-center space-x-3 py-2 pr-4 pl-1 rounded hover:bg-slate-800">
+                {{ icons.icon('magnify') }}
+                <span class="text-xl text-neutral-200 font-bold">Discover</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 py-2 pr-4 pl-1 rounded hover:bg-slate-800">
+                {{ icons.icon('notification') }}
+                <span class="text-xl text-neutral-200 font-bold">Notifications</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 py-2 pr-4 pl-1 rounded hover:bg-slate-800">
+                {{ icons.icon('bookmark') }}
+                <span class="text-xl text-neutral-200 font-bold">Saved</span>
+            </a>
+        </nav>
+        {% endif %}
+
+        <div class="mt-6 mb-2">
+            <h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-2">Categories</h3>
+            <div class="inline-flex flex-wrap gap-2">
+                <a href="#" class="bg-slate-700 hover:bg-slate-600 text-neutral-200 px-2 py-1 text-sm rounded">Technology</a>
+            </div>
+            <a href="#" class="mt-2 text-neutral-400 hover:text-neutral-200 text-sm block">Show All »</a>
+        </div>
+
+        <div class="mt-6 mb-2">
+            <h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-2">Tags</h3>
+            <div class="inline-flex flex-wrap gap-2">
+                <a href="#" class="bg-slate-700 hover:bg-slate-600 text-neutral-200 px-2 py-1 text-sm rounded">#entries</a>
+            </div>
+            <a href="#" class="mt-2 text-neutral-400 hover:text-neutral-200 text-sm block">Show All »</a>
+        </div>
+
+    </div>
+
+
+    {% if current_user.is_authenticated %}
+    <div class="my-8 mr-4">
+
+        <div class="space-y-2 mb-4">
+            <a href="{{ url_for('topic.new_topic') }}" class="block w-full bg-slate-700 text-neutral-200 font-bold py-2 rounded text-center hover:bg-slate-600">Create New Topic</a>
+        </div>
+
+        <div class="border-t border-slate-700 pt-4">
+            <a href="{{ url_for('user.profile', username=current_user.username) }}" class="flex items-center space-x-3 p-2 rounded-md hover:bg-slate-800">
+                <img class="w-8 h-8 rounded-full bg-white border border-slate-600" src="{{ url_for('static', filename='uploads/avatar/' + current_user.avatar) }}" alt="{{ current_user.username }}">
+                <span class="text-neutral-200 font-semibold">{{ current_user.username }}</span>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+</aside>

@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+{% block title %} Home {{ super() }}{% endblock %}
+
+{% from "macros/entry.html" import render_entry %}
+
+{% block content %}
+
+    {% if entries %}
+        {% for entry in entries %}
+            {{ render_entry(entry, true) }}
+        {% endfor %}
+    {% else %}
+        <div class="text-center">
+            <p class="text-center text-2xl font-bold">It seems like a fresh start.</p>
+            <a href="{{ url_for('topic.new_topic') }}" class="inline-block mt-2 text-xl text-blue-400 hover:text-blue-500 hover:underline">Create Topic</a>
+        </div>
+    {% endif %}
+
+{% endblock %}

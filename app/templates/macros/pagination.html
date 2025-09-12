@@ -1,0 +1,44 @@
+{% import "macros/icons.html" as icons %}
+
+{% macro render_pagination(pagination, endpoint, params={}) %}
+    {% if pagination.pages > 1 %}
+    <nav class="flex justify-end items-center my-4 font-ui">
+        <ul class="inline-flex items-center space-x-1">
+            {% if pagination.page > 1 %}
+                <li>
+                    <a href="{{ url_for(endpoint, page=1, **params) }}" class="px-3 py-1 rounded bg-slate-800 text-neutral-200 hover:bg-slate-500">«</a>
+                </li>
+            {% endif %}
+
+            {% if pagination.has_prev %}
+                <li>
+                    <a href="{{ url_for(endpoint, page=pagination.prev_num, **params) }}" class="px-3 py-1 rounded bg-slate-700 text-neutral-200 hover:bg-slate-100 hover:text-neutral-600">‹</a>
+                </li>
+            {% endif %}
+
+            {% for p in range(pagination.page - 2, pagination.page + 3) if 1 <= p <= pagination.pages %}
+                <li>
+                    {% if p == pagination.page %}
+                        <span class="px-3 py-1 rounded bg-slate-100 text-neutral-600 font-semibold">{{ p }}</span>
+                    {% else %}
+                        <a href="{{ url_for(endpoint, page=p, **params) }}" class="px-3 py-1 rounded bg-slate-500 text-neutral-200 hover:bg-slate-800">{{ p }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+
+            {% if pagination.has_next %}
+                <li>
+                    <a href="{{ url_for(endpoint, page=pagination.next_num, **params) }}" class="px-3 py-1 rounded bg-slate-700 text-neutral-200 hover:bg-slate-100 hover:text-neutral-600">›</a>
+                </li>
+            {% endif %}
+
+            {% if pagination.page < pagination.pages %}
+                <li>
+                    <a href="{{ url_for(endpoint, page=pagination.pages, **params) }}" class="px-3 py-1 rounded bg-slate-800 text-neutral-200 hover:bg-slate-500">»</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+    {% endif %}
+{% endmacro %}
