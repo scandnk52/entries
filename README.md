@@ -11,12 +11,12 @@ git clone "https://github.com/scandnk52/entries.git"
 cd "entries"
 ```
 
-# Create virtual environment
+### Create virtual environment
 ```bash
 python -m venv venv
 ```
 
-# Enter the virtual environment
+### Enter the virtual environment
 ```bash
 source venv/bin/activate  # macOS/Linux
 ```
@@ -24,22 +24,22 @@ source venv/bin/activate  # macOS/Linux
 venv\Scripts\activate     # Windows
 ```
 
-# Install dependencies
+### Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-# Copy environment variables
+### Copy environment variables
 ```bash
 cp .env.example .env
 ```
 
-# Run database migrations
+### Run database migrations
 ```bash
 flask db upgrade
 ```
 
-# Run the application
+### Run the application
 ```bash
 python run.py
 ```
